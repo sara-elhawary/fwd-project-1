@@ -5,18 +5,17 @@ function main() {
 
 //SELECT ACTIVE SECTION
 function activeSection() {
-  const navBar = document.getElementById('nav-bar')
-  navBarLinks = navBar.children
+  const navBarLinks = document.querySelectorAll('.nav-link')
   console.log(navBarLinks)
-
-  navBarLinks.addEventListener('click', function (event) {
-    for (const i = 0; i < navBarLinks.length; i++) {
-      if (navBarLinks.item(i).contains('active')) {
-        navBarLinks.item(i).remove('active')
+  navBarLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const activeLink = document.querySelector('.nav-link.active')
+      if (activeLink) {
+        activeLink.classList.remove('active')
       }
-    }
-    event.target.classList.add('active')
-    console.log(event.target.classList)
+      const currentLink = event.target
+      currentLink.classList.add('active')
+    })
   })
 }
 
@@ -31,7 +30,7 @@ function dynamicNavBar() {
 
   for (const link in links) {
     const item = document.createElement('li')
-    item.classList.add('nav-link')
+
     item.innerHTML = `<a href="#${links[link]}" class="nav-link">${link}</a>`
     console.log(item.innerHTML)
     navBar.appendChild(item)
