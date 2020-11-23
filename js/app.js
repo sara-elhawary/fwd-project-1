@@ -1,18 +1,28 @@
-const navLinks = document.querySelectorAll('.section')
+const navSections = document.querySelectorAll('section')
 const navBar = document.getElementById('nav-bar')
-//dynamic nav bar
+
+//DYNAMIC NAV BAR
 function dynamivNavBar() {
   let fragment = document.createDocumentFragment()
-  navLinks.forEach((element) => {
+  navSections.forEach((element) => {
     let newli = document.createElement('li')
     let newLink = document.createElement('a')
-    let txtContent = document.createTextNode(element.id)
+    const elementId = element.id
+    let navLink = elementId
+      .split('-')
+      .map((word) => capitalize(word))
+      .join(' ')
+    let txtContent = document.createTextNode(navLink)
     let attr = document.createAttribute('data-link')
+    let hrefAttr = document.createAttribute('href')
     attr.value = `#${element.id}`
+    hrefAttr.value = `#${element.id}`
     newLink.setAttributeNode(attr)
-    let att1 = document.createAttribute('class')
-    att1.value = 'link'
-    newLink.setAttributeNode(att1)
+    newLink.setAttributeNode(hrefAttr)
+
+    let attr1 = document.createAttribute('class')
+    attr1.value = 'nav-link'
+    newLink.setAttributeNode(attr1)
     newLink.appendChild(txtContent)
     newli.appendChild(newLink)
     fragment.appendChild(newli)
@@ -33,49 +43,56 @@ function helper() {
     console.log('DOM fully loaded and parsed')
   })
 }
-dynamivNavBar()
-// function main() {
-//   dynamicNavBar()
-//   activeSection()
-// }
+function capitalize(word) {
+  return word.charAt(0).toUpperCase() + word.slice(1)
+}
 
-// //SELECT ACTIVE SECTION
-// //querySelectorAll for section and then he used data nav and assigned
-// //its value to
-// function activeSection() {
-//   const navBarLinks = document.querySelectorAll('.nav-link')
-//   console.log(navBarLinks)
-//   navBarLinks.forEach((link) => {
-//     link.addEventListener('click', (event) => {
-//       const activeLink = document.querySelector('.nav-link.active')
-//       const highlighted = document.querySelector('.higlighted')
-//       if (activeLink && highlighted) {
-//         activeLink.classList.remove('active')
-//         highlighted.classList.remove('highlighted')
-//       }
-//       const currentLink = event.target
-//       currentLink.classList.add('active')
-//     })
-//   })
-// }
+function inViewPort(element) {
+  const dimensions = element.getBoundingClientRect()
+  const top = dimensions.top
+  const left = dimensions.left
+  const bottom = dimensions.bottom
+  const right = dimensions.right
 
-// //Dynamically built navigation bar
-// function dynamicNavBar() {
-//   const navBar = document.getElementById('nav-bar')
-//   const links = {
-//     Home: 'home-page',
-//     Why: 'our-work',
-//     Services: 'unique',
-//     Contact: 'footer',
-//   }
+  return (
+    top >= 0 &&
+    left >= 0 &&
+    bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+    right <= (window.innerWidth || document.documentElement.clientWidth)
+  )
+}
 
-//   for (const link in links) {
-//     const item = document.createElement('li')
+function activeLinkFunction() {
+  const navLinks = document.querySelectorAll('.nav-link')
+  navLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const activeLink = document.querySelector('.nav-link.active')
+      if (activeLink) {
+        activeLink.classList.remove('active')
+      }
+      const currentLink = event.target
+      currentLink.classList.add('active')
+    })
+  })
+}
 
-//     item.innerHTML = `<a href="#${links[link]}" class="nav-link">${link}</a>`
-//     console.log(item.innerHTML)
-//     navBar.appendChild(item)
-//     console.log('item is created')
-//   }
-// }
-// main()
+//SELECT ACTIVE SECTION
+
+function activeSection() {
+  console.log(navSections)
+  document.addEventListener('scroll', function (event) {
+    event.preventDefault()
+    navSections.forEach((section) => {
+      if (inViewPort(section)) {
+        section.classList.add('highlighted')
+      }
+    })
+  })
+}
+
+function main() {
+  dynamivNavBar()
+  activeLinkFunction()
+  activeSection()
+}
+main()

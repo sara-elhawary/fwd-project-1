@@ -37,7 +37,7 @@ body {
 }
 .nav-bar li {
   display: inline;
-  margin-right: 1.5rem;
+  margin-right: 1.2rem;
 }
 .nav-link {
   text-decoration: none;
@@ -47,6 +47,9 @@ body {
 }
 .active {
   color: hsl(256, 26%, 20%);
+}
+.highlighted {
+  background-color: coral;
 }
 .nav-btn {
   border-color: black;
@@ -191,7 +194,7 @@ main {
 /********************************************************
                          FOOTER
 ********************************************************/
-.footer {
+.contact {
   margin: 300px 80px 50px 120px;
   /* border: red solid 1px; */
 }
@@ -222,4 +225,19 @@ main {
 .heading {
   margin-bottom: 15px;
   color: hsl(216, 30%, 68%);
+}
+
+/******************************************
+                  MEDIA QUERY
+******************************************/
+@media screen and (max-width: 757px) {
+  .top-bar {
+    /* background-color: lightgreen; */
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+  }
+  .nav-btn {
+    margin: 0 auto;
+  }
 }
