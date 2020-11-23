@@ -14,9 +14,8 @@ This project is a simple landing page for the udacity program project.
 
 Project is created with:
 
-- HTML version: 12.3
-- Javascript version: 2.33
-- CSS version: 999
+- HTML version: 5
+- Javascript version: 1.7
 
 ### Setup
 
