@@ -49,7 +49,7 @@ body {
   color: hsl(256, 26%, 20%);
 }
 .highlighted {
-  background-color: coral;
+  background-color: white;
 }
 .nav-btn {
   border-color: black;
